@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react"
+import { useEffect, useReducer, useRef, useState } from "react"
 
 interface AuthState {
     validando: boolean;
@@ -19,9 +19,7 @@ type LoginPayload = {
     nombre: string;
 }
 
-type AuthAction =
-    | { type: 'logout' }
-    | { type: 'login', payload: LoginPayload };
+type AuthAction = { type: 'logout' } | { type: 'login', payload: LoginPayload };
 
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -57,12 +55,16 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 
 export const Login = () => {
 
-    const [{ validando, token, nombre }, dispatch] = useReducer(authReducer, initialState)
+    const [{ validando, token, nombre, username }, dispatch] = useReducer(authReducer, initialState)
+
+    const first = useRef(null)
 
     useEffect(() => {
 
         setTimeout(() => {
+
             dispatch({ type: "logout" })
+
         }, 1500);
 
     }, [])
@@ -70,8 +72,8 @@ export const Login = () => {
     const login = () => {
         dispatch({
             type: 'login', payload: {
-                nombre: 'Fernando',
-                username: 'Strider'
+                nombre: 'sensei',
+                username: 'leio'
             }
         })
     }
@@ -98,7 +100,7 @@ export const Login = () => {
             {
                 (token)
 
-                    ? <div className='alert alert-success'> Autenticado como: {nombre} </div>
+                    ? <div className='alert alert-success'> Autenticado como: {nombre} {username}  </div>
                     : <div className='alert alert-danger'>No autenticado</div>
 
             }
