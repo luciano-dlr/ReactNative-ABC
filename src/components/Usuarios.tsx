@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { reqResApi } from '../api/reqRes';
 import { ReqResListado, Usuario } from '../interfaces/reqRes';
 
-
 export const Usuarios = () => {
-
     //mio
     // const [users, setUsers] = useState<any>()
 
@@ -15,14 +13,15 @@ export const Usuarios = () => {
     //Lo evitamos con un array vacio []
 
     useEffect(() => {
-        reqResApi.get<ReqResListado>('/users')
-            .then(resp => {
-                console.log('funca', resp.data.data);
-                setUsuarios(resp.data.data);
-            })
-            .catch(err => console.log(err));
+        cargarUsuario();
     }, [])
 
+    const cargarUsuario = async () => {
+
+        const resp = await reqResApi.get<ReqResListado>('/users')
+        setUsuarios(resp.data.data);
+
+    }
 
     //fer
     const renderItem = ({ id, first_name, last_name, email, avatar }: Usuario) => {
@@ -43,21 +42,16 @@ export const Usuarios = () => {
         );
     };
 
-
     return (
         <>
-
             <h3>Usuarios: </h3>
-
             <table className="table">
                 <thead >
-
                     <tr>
                         <th>Avatar</th>
                         <th>Nombre</th>
                         <th>Email</th>
                     </tr>
-
                 </thead>
                 {/* mio */}
                 {/* <tbody>
@@ -77,7 +71,12 @@ export const Usuarios = () => {
                     }
                 </tbody>
             </table>
+            <button
+                className='btn btn-primary'
+                onClick={cargarUsuario}
+            >
+                Siguiente
+            </button>
         </>
     )
 }
-
