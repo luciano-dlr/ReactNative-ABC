@@ -1,27 +1,13 @@
-import { useEffect, useState } from 'react';
-import { reqResApi } from '../api/reqRes';
-import { ReqResListado, Usuario } from '../interfaces/reqRes';
+import { Usuario } from '../interfaces/reqRes';
+import { useUsuarios } from '../hooks/useUsuarios';
 
 export const Usuarios = () => {
+
     //mio
     // const [users, setUsers] = useState<any>()
 
-    //fer
-    const [usuarios, setUsuarios] = useState<Usuario[]>([])
+    const { usuarios, paginaAnterior, paginaSiguiente, cargarUsuario } = useUsuarios()
 
-    //tipo :never porque jamas va tener un valor si dejamos () vacio como valor inicial
-    //Lo evitamos con un array vacio []
-
-    useEffect(() => {
-        cargarUsuario();
-    }, [])
-
-    const cargarUsuario = async () => {
-
-        const resp = await reqResApi.get<ReqResListado>('/users')
-        setUsuarios(resp.data.data);
-
-    }
 
     //fer
     const renderItem = ({ id, first_name, last_name, email, avatar }: Usuario) => {
@@ -73,7 +59,14 @@ export const Usuarios = () => {
             </table>
             <button
                 className='btn btn-primary'
-                onClick={cargarUsuario}
+                onClick={paginaAnterior}
+            >
+                Anterior
+            </button>
+            &nbsp;
+            <button
+                className='btn btn-primary'
+                onClick={paginaSiguiente}
             >
                 Siguiente
             </button>
