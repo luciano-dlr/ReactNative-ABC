@@ -7,6 +7,8 @@
 // import { Usuarios } from "./components/Usuarios"
 
 import { Fromularios } from "./components/Fromularios"
+import { UsersPage } from "./components/UsersPage"
+
 
 
 
@@ -22,7 +24,11 @@ const App = () => {
       {/* <ContadorConHook /> */}
       {/* <Login /> */}
       {/* <Usuarios /> */}
-      <Fromularios />
+
+      {/* Login Zustand en Formularios */}
+      {/* <Fromularios /> */}
+      
+      <UsersPage/>
     </div>
   )
 }
